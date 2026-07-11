@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WHITE CEO SMART LAB</title>
+<style>
+  :root { --primary: #8b5cf6; --bg-dark: #0f0a1a; --bg-light: #1a1333; --glow: #a855f7; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: linear-gradient(135deg, var(--bg-dark), #2d1b69); color: #fff; font-family: sans-serif; min-height: 100vh; padding: 20px; }
+  .container { max-width: 800px; margin: 0 auto; }
+  h1 { text-align: center; color: var(--glow); text-shadow: 0 0 20px var(--glow); font-size: 2.2em; margin-bottom: 10px; }
+  .subtitle { text-align: center; color: #c4b5fd; margin-bottom: 30px; }
+  .generate-btn { margin: 10px auto; padding: 12px 30px; background: var(--primary); color: #fff; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; display: block; font-size: 16px; box-shadow: 0 0 15px var(--glow); }
+  .tabs { display: flex; gap: 10px; margin: 20px 0; flex-wrap: wrap; justify-content: center; }
+  .tab { padding: 10px 20px; background: var(--bg-light); border-radius: 8px; cursor: pointer; border: 1px solid var(--primary); }
+  .tab.active { background: var(--primary); box-shadow: 0 0 10px var(--glow); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  textarea { width: 100%; background: var(--bg-light); color: #fff; border: 1px solid var(--primary); border-radius: 8px; padding: 12px; font-size: 14px; min-height: 100px; }
+  #codeOutput { background: var(--bg-light); padding: 15px; border-radius: 8px; min-height: 250px; color: #c4b5fd; white-space: pre-wrap; border: 1px solid var(--primary); font-family: monospace; font-size: 13px; }
+  #previewFrame { width: 100%; min-height: 400px; background: var(--bg-light); border: 2px solid var(--primary); border-radius: 8px; padding: 20px; }
+  
+  /* CEO COMPONENTS */
+  .login-box { background: var(--bg-dark); padding: 30px; border-radius: 12px; max-width: 350px; margin: 20px auto; border: 1px solid var(--primary); }
+  .login-box input { width: 100%; padding: 12px; margin: 10px 0; background: var(--bg-light); color: #fff; border: 1px solid var(--primary); border-radius: 8px; }
+  .ceo-btn { padding: 15px 40px; background: var(--primary); color: #fff; border: none; border-radius: 15px; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 0 20px var(--glow); margin: 20px auto; display: block; }
+  .ceo-card { background: var(--bg-dark); padding: 25px; border-radius: 15px; border: 1px solid var(--primary); max-width: 400px; margin: 20px auto; box-shadow: 0 0 15px var(--glow); }
+  .ceo-card h2 { color: var(--glow); margin-bottom: 10px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>👑 WHITE CEO SMART LAB</h1>
+  <p class="subtitle">Royal AI Development Platform</p>
+  
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('prompt')">Prompt</div>
+    <div class="tab" onclick="showTab('code')">Code</div>
+    <div class="tab" onclick="showTab('preview')">Preview</div>
+    <div class="tab" onclick="showTab('image')">Image</div>
+    <div class="tab" onclick="showTab('assist')">Assist</div>
+    <div class="tab" onclick="showTab('hacker')">Hacker</div>
+  </div>
+  
+  <div id="prompt" class="tab-content active">
+    <textarea id="promptInput" placeholder="Try: login page, signup form, button, card"></textarea>
+    <button class="generate-btn" onclick="generate()">Generate ▶️</button>
+  </div>
+  
+  <div id="code" class="tab-content"><pre id="codeOutput">Your generated code will appear here CEO...</pre></div>
+  <div id="preview" class="tab-content"><div id="previewFrame"></div></div>
+  <div id="image" class="tab-content"><p style="text-align:center;">Image Generator - Coming Soon</p></div>
+  <div id="assist" class="tab-content"><p style="text-align:center;">AI Assistant - Coming Soon</p></div>
+  <div id="hacker" class="tab-content"><p style="text-align:center; color:var(--glow);">🔥 HACKER MODE ACTIVATED 🔥</p></div>
+</div>
+
+<script>
+function showTab(tabName) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById(tabName).classList.add('active');
+}
+
+function generate() {
+  const prompt = document.getElementById('promptInput').value.toLowerCase();
+  let code = '';
+  
+  if(prompt.includes('login')) {
+    code = `<!-- CEO LOGIN PAGE -->\n<div class="login-box">\n  <h2 style="text-align:center; color:#a855f7; margin-bottom:20px;">Login</h2>\n  <input type="email" placeholder="Enter Email">\n  <input type="password" placeholder="Enter Password">\n  <button class="generate-btn">Login</button>\n</div>`;
+  } 
+  else if(prompt.includes('signup')) {
+    code = `<!-- CEO SIGNUP FORM -->\n<div class="login-box">\n  <h2 style="text-align:center; color:#a855f7; margin-bottom:20px;">Sign Up</h2>\n  <input type="text" placeholder="Full Name">\n  <input type="email" placeholder="Enter Email">\n  <input type="password" placeholder="Create Password">\n  <button class="generate-btn">Sign Up</button>\n</div>`;
+  }
+  else if(prompt.includes('button')) {
+    code = `<!-- CEO BUTTON -->\n<button class
