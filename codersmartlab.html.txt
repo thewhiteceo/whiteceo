@@ -1,0 +1,229 @@
+codersmartlab.html
+<!-- Created by White CEO 😎 -->
+
+<!--- Created by Qhite 😎 CEO -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Coder's Lab with Ai 🖥️</title>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div id="startup-loader">
+		<div class="loader-content">
+			<div class="startup-logo-container">
+				<div class="glowing-ring"></div>
+				<div class="glowing-ring reverse"></div>
+				<div class="core-dot"></div>
+			</div>
+			<h1 class="startup-title"><span class="ai-text">Coder's</span> SMART LAB</h1>
+			<p class="startup-subtitle"> <b>CREATED BY White CEO 😎 FOR SMART CODERS...🤓</b></p>
+			
+			<div class="startup-progress-wrapper">
+				<div id="startup-progress-bar" class="startup-progress-bar"></div>
+			</div>
+			<div id="startup-percentage" class="startup-percentage">0%</div>
+		</div>
+	</div>
+
+	<div class="app-container">
+		<div class="tab-bar">
+			<button class="tab-btn active" onclick="switchTab('prompt')">📝 Prompt</button>
+			<button class="tab-btn" onclick="switchTab('code')">💻 Code</button>
+			<button class="tab-btn" onclick="switchTab('preview')"> 🔲 Preview</button>
+			<button class="tab-btn" onclick="switchTab('assistant')">🔰 Assist</button>
+			<button class="tab-btn" onclick="switchTab('hacker')" style="color:#0f0; text-shadow:0 0 8px #0f0;"> 🧑🏻‍💻 Hacker</button>
+			<button class="theme-toggle" onclick="toggleTheme()" title="Switch Theme">🌙</button>
+		</div>
+		
+		<div id="prompt" class="tab-content active">
+			<div class="prompt-templates">
+				<span class="template-chip" onclick="applyTemplate('Create an html code for hello world in two languages with smooth animation and thin border')">Hello World 👋🏻</span>
+				<span class="template-chip" onclick="applyTemplate('Build a fully functional Neumorphic JS Calculator with smooth animations.')">JS Calculator</span>
+				<span class="template-chip" onclick="applyTemplate('Write a CSS-only glowing loader animation suitable for dark theme.')">Glowing Loader</span>
+				<span class="template-chip" onclick="applyTemplate('Create an interactive To-Do list using local storage in plain JS.')">To-Do App (Storage)</span>
+				<span class="template-chip" onclick="applyTemplate('Design a Sololearn profile card with smooth animation and border containing all the information I provide')">Profile</span>
+			</div>
+			
+			<textarea id="userInput" placeholder="Write your prompt here..." onfocus="showGenerateBtn()"></textarea>
+			<button id="genBtn" class="generate-btn" onclick="generateCode()">✨ Generate Your Code ✨</button>
+			<div id="loading" class="loading-container">
+				<div class="loading-text">Code generating started...Hold your Patience!</div>
+				<div class="loading-bar-bg">
+					<div class="loading-line"></div>
+				</div>
+			</div>
+		</div>
+
+		<div id="code" class="tab-content">
+			<div class="action-bar">
+				<div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+					<button class="action-btn" onclick="scanCode()">🔍 Code Scan</button>
+					<button id="editBtn" class="action-btn" onclick="toggleEdit()">✏️ Edit</button>
+					<button class="action-btn" onclick="toggleNotes()">📔 Notes</button>
+					<button class="action-btn" onclick="copyCode()">📋 Copy Code</button>
+				</div>
+				<div style="display:flex; gap:8px; align-items:center;"> 
+				</div>
+			</div>
+			<div style="position: relative; flex: 1; display: flex; flex-direction: column; min-height: 0;">
+				<pre class="line-numbers"><code id="codeOutput" class="language-html">Your code will appear here once it is generated.. </code></pre>
+				<div id="scanOverlay">
+					<div class="radar-line"></div>
+					<div class="scan-text">Scanning Code Authenticity...</div>
+				</div>
+			</div>
+			<div id="notesModal" class="notes-modal">
+				<div class="notes-content">
+					<div id="home-screen">
+						<div class="header-top">
+							<div>
+								<h1>Notes</h1>
+								<div class="note-count" id="note-count">0 Notes</div>
+							</div>
+							<button class="setting-btn" onclick="openSettings()"><span class="material-icons">more_vert</span></button>
+						</div>
+						<div class="search-container">
+							<span class="material-icons">search</span>
+							<input type="text" id="search-input" placeholder="Search notes..." oninput="renderNotes()">
+						</div>
+						<div id="notes-container" class="view-grid"></div>
+						<div id="fab" onclick="openEditor()"><span class="material-icons">add</span></div>
+						<button onclick="toggleNotes()" class="note-save-exit">💾 Save & Exit</button>
+					</div>
+					<div id="settings-overlay" onclick="closeSettings(event)">
+						<div class="settings-sheet" id="settings-sheet" onclick="event.stopPropagation()">
+							<h3>Settings</h3>
+							<div class="setting-item" onclick="toggleView()">
+								<span class="material-icons" id="view-icon">view_list</span>
+								<span id="view-text">Switch to List View</span>
+							</div>
+							<div class="setting-item" style="color: #e53935;" onclick="confirmClearAll()">
+								<span class="material-icons">delete_sweep</span>
+								<span>Clear All Notes</span>
+							</div>
+						</div>
+					</div>
+					<div id="delete-dialog-overlay" style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); z-index:110; display:none; opacity:0; transition: 0.3s; border-radius:20px;">
+						<div class="delete-dialog" id="delete-dialog">
+							<h3 id="dialog-title">Delete Note</h3>
+							<p id="dialog-msg">Move this note to trash?</p>
+							<div class="dialog-actions">
+								<button class="dialog-btn btn-cancel" onclick="hideDialog()">Cancel</button>
+								<button class="dialog-btn btn-delete" onclick="executeDelete()">Delete</button>
+							</div>
+						</div>
+					</div>
+					<div id="editor-screen">
+						<div class="editor-header">
+							<button class="icon-btn" onclick="saveAndClose()"><span class="material-icons">arrow_back</span></button>
+							<div style="display: flex; gap: 12px;">
+								<button class="icon-btn" id="delete-btn" style="color: #e53935;" onclick="showDeleteSingle()"><span class="material-icons">delete_outline</span></button>
+								<button class="icon-btn" onclick="saveAndClose()"><span class="material-icons">check</span></button>
+							</div>
+						</div>
+						<div class="color-picker">
+							<span class="color-dot active" style="background: #ffffff" onclick="changeColor('#ffffff', this)"></span>
+							<span class="color-dot" style="background: #FCE4EC" onclick="changeColor('#FCE4EC', this)"></span> 
+							<span class="color-dot" style="background: #E3F2FD" onclick="changeColor('#E3F2FD', this)"></span> 
+							<span class="color-dot" style="background: #E8F5E9" onclick="changeColor('#E8F5E9', this)"></span> 
+							<span class="color-dot" style="background: #FFF3E0" onclick="changeColor('#FFF3E0', this)"></span> 
+							<span class="color-dot" style="background: #F3E5F5" onclick="changeColor('#F3E5F5', this)"></span> 
+						</div>
+						<div class="editor-meta">
+							<span id="live-date"></span>
+							<span id="char-count">0 words</span>
+						</div>
+						<div class="editor-content">
+							<input type="text" id="edit-title" placeholder="Title">
+							<div id="edit-body" contenteditable="true" placeholder="Start writing..." oninput="updateWordCount()"></div>
+						</div>
+						<div class="editor-toolbar">
+							<button class="toolbar-btn" onmousedown="event.preventDefault(); formatText('undo')"><span class="material-icons">undo</span></button>
+							<button class="toolbar-btn" onmousedown="event.preventDefault(); formatText('redo')"><span class="material-icons">redo</span></button>
+							<div class="toolbar-divider"></div>
+							<button class="toolbar-btn" onmousedown="event.preventDefault(); formatText('bold')"><span class="material-icons">format_bold</span></button>
+							<button class="toolbar-btn" onmousedown="event.preventDefault(); formatText('italic')"><span class="material-icons">format_italic</span></button>
+							<button class="toolbar-btn" onmousedown="event.preventDefault(); formatText('underline')"><span class="material-icons">format_underlined</span></button>
+							<button class="toolbar-btn" onmousedown="event.preventDefault(); formatText('strikeThrough')"><span class="material-icons">strikethrough_s</span></button>
+							<div class="toolbar-divider"></div>
+							<button class="toolbar-btn" onmousedown="event.preventDefault(); formatText('insertUnorderedList')"><span class="material-icons">format_list_bulleted</span></button>
+							<button class="toolbar-btn" onmousedown="event.preventDefault(); formatText('insertOrderedList')"><span class="material-icons">format_list_numbered</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="preview" class="tab-content">
+			<div class="action-bar">
+				<div style="display:flex; gap:12px; flex-wrap:wrap;">
+					<button class="action-btn" onclick="togglePreview('desktop')">💻 Desktop</button>
+					<button class="action-btn" onclick="togglePreview('mobile')">📱Mobile</button>
+					<button class="action-btn" style="border-color:#ffcc00; color:#ffcc00;" onclick="refreshPreview()">🔁 Reset</button>
+					<button class="action-btn" style="border-color:#ff00ea; color:#ff00ea;" onclick="openNewWindow()">🪟full screen</button>
+				</div>
+				<div style="display:flex; gap:12px; flex-wrap:wrap;">
+			 </div>
+			 </div>
+			<iframe id="previewFrame"></iframe>
+		</div>
+
+		<div id="assistant" class="tab-content">
+			<div class="chat-top-bar">
+				<button class="clear-chat-btn" onclick="clearChat()"><b>Clear</b></button>
+			</div>
+			<div id="chat-messages">
+				<div class="msg ai">Hello! I'm White CEO Al I can answer your questions, coding and generate images too...🤓</div>
+			</div>
+			<div class="chat-input-area">
+				<button id="micBtn" class="mic-btn" onclick="startVoiceRecognition()" title="Voice Input"><span class="material-icons">mic</span></button>
+				<input type="text" id="chatInput" placeholder="Message your assistant..." onkeypress="handleEnter(event)">
+				<button class="send-btn" onclick="sendChat()">Send ✨</button>
+			</div>
+		</div>
+
+		<div id="hacker" class="tab-content">
+			<canvas id="matrixCanvas"></canvas>
+			<div class="hacker-content-wrapper">
+				<div class="hacker-tools">
+					<button class="btn-soft" onclick="runTool('fetch')">Network IP</button>
+					<button class="btn-hard" onclick="runTool('decrypt')">Brute-Force</button>
+					<button class="btn-glow" onclick="runTool('breach')">Breach Sys</button>
+					<button class="btn-soft" onclick="runTool('recon')" style="border-color: #ff00ff; color: #ff00ff;">Target Recon</button>
+					<button class="btn-soft" onclick="runTool('crypto')" style="border-color: #ffcc00; color: #ffcc00;">Crypto Probe</button>
+					<button class="btn-soft" onclick="runTool('kali')" style="border-color: #00ffcc; color: #00ffcc;">Kali Linux</button>
+					<button class="btn-soft" onclick="runTool('wifi')" style="border-color: #ff5500; color: #ff5500;">WiFi Hack</button>
+					<button class="btn-soft" onclick="runTool('portscan')" style="border-color: #00ccff; color: #00ccff;">Port Scan</button>
+					<button class="btn-soft" onclick="runTool('base64')" style="border-color: #ff9900; color: #ff9900;">B64 Encode</button>
+					
+					<button class="btn-soft" onclick="runTool('ddos')" style="border-color: #ff0000; color: #ff0000;">DDoS Attack</button>
+					<button class="btn-soft" onclick="runTool('clear')" style="margin-left: auto;">Clear</button>
+				</div>
+				<div class="terminal-display" id="terminal">
+					<div class="terminal-line">ROOT@SYSTEM:~$ INITIALIZING HACKER PROTOCOL v4.0...</div>
+					<div class="terminal-line">Modules loaded: GEO-IP, RECON, CRYPTO, KALI-ENV, WIFI-PENTEST, DDOS, PORTSCAN, BASE64, MATRIX.</div>
+					<div class="terminal-line">Awaiting command... Type 'help' to see options.</div>
+				</div>
+				<div class="hacker-input-wrapper">
+					<div id="cmd-suggestions" class="cmd-suggestions"></div>
+					<div class="hacker-input-area">
+						<span class="prompt-sign">root@sys:~#</span>
+						<input type="text" id="hackerCmd" autocomplete="off" placeholder="enter command..." oninput="showSuggestions()" onkeydown="processHackerCmd(event)">
+						<button class="cmd-send-btn" onclick="executeCommand()">EXECUTE</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+	<script src="script.js"></script>
+</body>
+</html>
