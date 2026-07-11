@@ -1,0 +1,73 @@
+The white ceo.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WHITE CEO SMART LAB</title>
+<link rel="manifest" href="manifest.json">
+<style>
+  body { background: linear-gradient(135deg, #0a0a1a, #1a0033); color: white; font-family: Arial; text-align: center; padding: 20px; }
+  h1 { color: #a855f7; text-shadow: 0 0 20px #a855f7; }
+  .btn { background: #1a1a2e; border: 2px solid #a855f7; color: white; padding: 10px 20px; margin: 5px; border-radius: 10px; cursor: pointer; }
+  .btn.active { background: #a855f7; }
+  textarea { width: 90%; height: 120px; background: #1a1a2e; border: 2px solid #a855f7; color: white; border-radius: 10px; padding: 10px; }
+  #generate { background: #a855f7; padding: 15px 40px; font-size: 18px; border: none; border-radius: 10px; margin-top: 10px; cursor: pointer; }
+  #output { background: #0a0a1a; border: 2px solid #a855f7; margin-top: 20px; padding: 15px; border-radius: 10px; text-align: left; white-space: pre-wrap; }
+</style>
+</head>
+<body>
+
+<h1>👑 WHITE CEO SMART LAB</h1>
+<p>Royal AI Development Platform</p>
+
+<button class="btn active" onclick="setMode('Prompt', event)">Prompt</button>
+<button class="btn" onclick="setMode('Code', event)">Code</button>
+<button class="btn" onclick="setMode('Preview', event)">Preview</button>
+<button class="btn" onclick="setMode('Image', event)">Image</button>
+<button class="btn" onclick="setMode('Assist', event)">Assist</button>
+<button class="btn" onclick="setMode('Hacker', event)">Hacker</button>
+
+<textarea id="input" placeholder="Create a login page with email password"></textarea>
+<br>
+<button id="generate" onclick="generate()">Generate ▶️</button>
+
+<div id="output"></div>
+
+<script>
+let currentMode = 'Prompt';
+
+function setMode(mode, e){
+  currentMode = mode;
+  document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  document.getElementById('output').innerHTML = '';
+}
+
+function generate(){
+  let input = document.getElementById('input').value;
+  let output = document.getElementById('output');
+  
+  if(currentMode === 'Prompt'){
+    output.innerHTML = `PROMPT MODE:\n\nYou asked: "${input}"\n\nAI Response: I will help you build this!`;
+  }
+  if(currentMode === 'Code'){
+    output.innerHTML = `CODE MODE:\n\nHere is code for: "${input}"\n\n<html>\n<head><title>Login</title></head>\n<body>\n<form>\nEmail: <input type="email"><br>\nPassword: <input type="password"><br>\n<button>Login</button>\n</form>\n</body>\n</html>`;
+  }
+  if(currentMode === 'Preview'){
+    output.innerHTML = `PREVIEW MODE:\n\n${input}\n\n[This will show live preview of your code]`;
+  }
+  if(currentMode === 'Image'){
+    output.innerHTML = `IMAGE MODE:\n\nGenerating image for: "${input}"\n\n[Image AI coming soon 👑]`;
+  }
+  if(currentMode === 'Assist'){
+    output.innerHTML = `ASSIST MODE:\n\nLet me help you with: "${input}"\n\nTips:\n1. Break it into small parts\n2. Use AI to debug\n3. Test step by step`;
+  }
+  if(currentMode === 'Hacker'){
+    output.innerHTML = `HACKER MODE:\n\nAnalyzing: "${input}"\n\nSecurity tips:\n- Use HTTPS\n- Validate inputs\n- Hash passwords\n[Ethical use only] 👑`;
+  }
+}
+</script>
+
+</body>
+</html>
