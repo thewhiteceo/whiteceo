@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SMART LAB AI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{background:linear-gradient(135deg,#0f0f1a,#2d0066);color:white;font-family:'Segoe UI',Arial;text-align:center;padding:15px}
+h1{color:#9333ea;text-shadow:0 0 25px #9333ea;font-size:24px;margin-bottom:5px}
+.subtitle{color:#a855f7;font-size:12px;margin-bottom:15px}
+.btn{background:#1a1a2e;border:2px solid #9333ea;color:white;padding:10px 14px;margin:4px;border-radius:12px;cursor:pointer;font-size:13px;font-weight:bold}
+.btn.active{background:#9333ea;box-shadow:0 0 20px #9333ea}
+textarea{width:92%;height:120px;background:#1a1a2e;border:2px solid #9333ea;color:white;border-radius:12px;padding:12px;font-size:14px}
+#gen{background:linear-gradient(90deg,#9333ea,#a855f7);padding:15px 40px;border:none;border-radius:12px;color:white;font-weight:bold;margin-top:12px;font-size:18px;cursor:pointer}
+#out{background:#0a0a1a;border:2px solid #9333ea;margin-top:15px;padding:18px;border-radius:12px;text-align:left;white-space:pre-wrap;min-height:160px;font-size:14px}
+iframe{width:100%;height:300px;background:white;border:2px solid #9333ea;border-radius:12px;margin-top:10px}
+</style>
+</head>
+<body>
+<h1>👑 SMART LAB AI</h1>
+<div class="subtitle">Powered by WHITE CEO</div>
+
+<button id="btnPrompt" class="btn active" onclick="setMode('Prompt')">Prompt</button>
+<button id="btnCode" class="btn" onclick="setMode('Code')">Code</button>
+<button id="btnPreview" class="btn" onclick="setMode('Preview')">Preview</button>
+<button id="btnImage" class="btn" onclick="setMode('Image')">Image</button>
+<button id="btnAssist" class="btn" onclick="setMode('Assist')">Assist</button>
+<button id="btnHacker" class="btn" onclick="setMode('Hacker')">Hacker</button>
+<br><br>
+
+<textarea id="inp" placeholder="Ask Smart Lab AI: Create login page with purple theme"></textarea>
+<br>
+<button id="gen" onclick="run()">Generate AI ▶️</button>
+<div id="out"></div>
+
+<script>
+let currentMode='Prompt';
+
+function setMode(m){
+currentMode=m;
+document.getElementById('btnPrompt').classList.remove('active');
+document.getElementById('btnCode').classList.remove('active');
+document.getElementById('btnPreview').classList.remove('active');
+document.getElementById('btnImage').classList.remove('active');
+document.getElementById('btnAssist').classList.remove('active');
+document.getElementById('btnHacker').classList.remove('active');
+document.getElementById('btn'+m).classList.add('active');
+document.getElementById('out').innerHTML='';
+}
+
+function run(){
+let i=document.getElementById('inp').value;
+let o=document.getElementById('out');
+if(i==''){o.innerHTML='⚠️ CEO ask Smart Lab AI something first!';return;}
+
+if(currentMode=='Prompt'){
+o.innerHTML='SMART LAB AI - PROMPT MODE 👑\n\nYour Request: '+i+'\n\nAI Analysis:\nTo build "'+i+'" I recommend:\n1. Clean HTML5 structure\n2. Dark Purple + Black theme\n3. Mobile responsive design\nSwitch to CODE mode to generate it.';
+}
+
+if(currentMode=='Code'){
+let code = '<!DOCTYPE html>\n<html>\n<head>\n<title>'+i+'</title>\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<style>\nbody{font-family:Arial;text-align:center;padding:50px;background:linear-gradient(135deg,#0f0f1a,#2d0066);color:white}\ninput,button{padding:12px;margin:8px;border-radius:8px;border:2px solid #9333ea}\nbutton{background:#9333ea;color:white;cursor:pointer;font-weight:bold}\n</style>\n</head>\n<body>\n<h1 style="color:#9333ea">'+i+'</h1>\n<input placeholder="Email"><br>\n<input type="password" placeholder="Password"><br>\n<button>Login</button>\n</body>\n</html>';
+o.innerHTML='SMART LAB AI - CODE MODE 💻\n\nFull code for: '+i+'\n\n'+code+'\n\nCopy this and test for Preview mode!';
+}
+
+if(currentMode=='Preview'){
+let previewCode = i.includes('<') ? i : '<h1 style="color:#9333ea;text-align:center">'+i+'</h1><p style="text-align:center">Smart Lab AI Preview</p>';
+o.innerHTML='SMART LAB AI - PREVIEW MODE 👀\n\nLive Preview Below 👇<iframe srcdoc="'+previewCode.replace(/"/g,'&quot;')+'"></iframe>';
+}
+
+if(currentMode=='Image'){
+o.innerHTML='SMART LAB AI - IMAGE MODE 🎨\n\nPrompt: "'+i+'"\n\nAI Suggestion:\n"Futuristic dark purple AI dashboard for '+i+', neon glow, glassmorphism, 4k, professional"\n\nUse this prompt in Midjourney or DALL-E';
+}
+
+if(currentMode=='Assist'){
+o.innerHTML='SMART LAB AI - ASSIST MODE 🤝\n\nBuilding: "'+i+'"\n\nAI ROADMAP:\n1. PLAN: Break into 3 components\n2. CODE: Generate with CODE mode\n3. TEST: Check with PREVIEW mode\n4. SECURE: Scan with HACKER mode\n5. DEPLOY: Push to GitHub Pages\nNeed step by step? Tell me which part.';
+}
+
+if(currentMode=='Hacker'){
+o.innerHTML='SMART LAB AI - HACKER MODE 🛡️\n\nSecurity Scan for: "'+i+'"\n\nAI SECURITY CHECKLIST:\n1. INPUT: Sanitize all user data\n2. AUTH: Hash passwords with bcrypt\n3. HTTPS: Force SSL/TLS encryption\n4. SQL: Use parameterized queries\n5. XSS: Escape <script> tags\nETHICAL REMINDER: Only hack your own projects!';
+}
+</script>
+</body>
+</html>
